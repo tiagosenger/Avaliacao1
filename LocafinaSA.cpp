@@ -42,7 +42,7 @@ void IncluirCliente(vector<Cliente>& clientes){
 }
 
 void ExcluirCliente(vector<Cliente>& clientes) {
-    
+
     string CPF;
     cout << "Informe o CPF do cliente a ser excluído: ";
     cin >> CPF;
@@ -58,6 +58,78 @@ void ExcluirCliente(vector<Cliente>& clientes) {
     cout << "Cliente com CPF " << CPF << " não encontrado." << endl;
 }
 
+/*void AlterarCliente(vector<Cliente>& clientes, const string& CPF) {
+
+    for (size_t i = 0; i < clientes.size(); ++i) {
+        if (clientes[i].CPF == CPF) {
+            cout << "Dados atuais do cliente:" << endl;
+            cout << "CPF: " << clientes[i].CPF << endl;
+            cout << "Nome: " << clientes[i].nome << endl;
+            cout << "Data de Nascimento: " << clientes[i].dtNascimento << endl;
+            cout << "CNH: " << clientes[i].CNH << endl;
+
+            cout << "Deseja alterar o nome? (S/N): ";
+            char opcao;
+            cin >> opcao;
+            if (opcao == 'S' || opcao == 's') {
+                cout << "Novo nome: ";
+                cin.ignore();
+                getline(cin, clientes[i].nome);
+            }
+
+            cout << "Deseja alterar a Data de Nascimento? (S/N): ";
+            cin >> opcao;
+            if (opcao == 'S' || opcao == 's') {
+                cout << "Nova Data de Nascimento: ";
+                cin >> clientes[i].dtNascimento;
+            }
+
+            cout << "Deseja alterar a CNH? (S/N): ";
+            cin >> opcao;
+            if (opcao == 'S' || opcao == 's') {
+                cout << "Nova CNH: ";
+                cin >> clientes[i].CNH;
+            }
+
+            cout << "Dados do cliente atualizados com sucesso!" << endl;
+            return;
+        }
+    }
+    cout << "Cliente com CPF " << CPF << " nao encontrado." << endl;
+}*/
+
+void ListarCliente (vector<Cliente>& clientes) {
+    
+    cout << "Lista de Clientes:" << endl;
+
+    for (const auto& Cliente : clientes) {
+        cout << "CPF: " << Cliente.CPF << endl;
+        cout << "Nome: " << Cliente.nome << endl;
+        cout << "Data Nascimento: " << Cliente.dtNascimento << endl;
+        cout << "CNH: " << Cliente.CNH << endl;
+        cout << "-----------------------------" << endl;
+    }
+}
+
+void LocalizarCliente(const vector<Cliente>& clientes) {
+    string CPF;
+    cout << "Informe o CPF do cliente a ser localizado: ";
+    cin >> CPF;
+
+    for (const auto& Cliente : clientes) {
+        if (Cliente.CPF == CPF) {
+            cout << "Cliente encontrado:" << endl;
+            cout << "CPF: " << Cliente.CPF << endl;
+            cout << "Nome: " << Cliente.nome << endl;
+            cout << "Data Nascimento: " << Cliente.dtNascimento << endl;
+            cout << "CNH: " << Cliente.CNH << endl;
+            return;
+        }
+    }
+
+    cout << "Cliente com CPF " << CPF << " não encontrado." << endl;
+}
+
 int main(){
     vector<Cliente> clientes;
     int opcao;
@@ -66,9 +138,9 @@ int main(){
         cout << "Menu de Opções: " << endl;
         cout << "1. Incluir" << endl;
         cout << "2. Excluir" << endl;
-        cout << "3. Alterar" << endl;
+        cout << "3. Alterar (apenas por CPF)" << endl;
         cout << "4. Listar" << endl;
-        cout << "5. Localizar" << endl;
+        cout << "5. Localizar (apenas por CPF)" << endl;
         cout << "0. Sair" << endl;
         cout << "Escolha uma opção: ";
         cin >> opcao;
@@ -80,9 +152,9 @@ int main(){
             case 2: 
                 ExcluirCliente (clientes);
                 break;
-            case 3: 
+            /*case 3: 
                 AlterarCliente (clientes);
-                break;
+                break;*/
             case 4:
                 ListarCliente (clientes);
                 break;
