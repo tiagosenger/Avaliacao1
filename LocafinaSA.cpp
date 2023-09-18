@@ -58,7 +58,7 @@ void ExcluirCliente(vector<Cliente>& clientes) {
     cout << "Cliente com CPF " << CPF << " não encontrado." << endl;
 }
 
-/*void AlterarCliente(vector<Cliente>& clientes, const string& CPF) {
+void AlterarCliente(vector<Cliente>& clientes, const string& CPF) {
 
     for (size_t i = 0; i < clientes.size(); ++i) {
         if (clientes[i].CPF == CPF) {
@@ -96,38 +96,6 @@ void ExcluirCliente(vector<Cliente>& clientes) {
         }
     }
     cout << "Cliente com CPF " << CPF << " nao encontrado." << endl;
-}*/
-
-void ListarCliente (vector<Cliente>& clientes) {
-    
-    cout << "Lista de Clientes:" << endl;
-
-    for (const auto& Cliente : clientes) {
-        cout << "CPF: " << Cliente.CPF << endl;
-        cout << "Nome: " << Cliente.nome << endl;
-        cout << "Data Nascimento: " << Cliente.dtNascimento << endl;
-        cout << "CNH: " << Cliente.CNH << endl;
-        cout << "-----------------------------" << endl;
-    }
-}
-
-void LocalizarCliente(const vector<Cliente>& clientes) {
-    string CPF;
-    cout << "Informe o CPF do cliente a ser localizado: ";
-    cin >> CPF;
-
-    for (const auto& Cliente : clientes) {
-        if (Cliente.CPF == CPF) {
-            cout << "Cliente encontrado:" << endl;
-            cout << "CPF: " << Cliente.CPF << endl;
-            cout << "Nome: " << Cliente.nome << endl;
-            cout << "Data Nascimento: " << Cliente.dtNascimento << endl;
-            cout << "CNH: " << Cliente.CNH << endl;
-            return;
-        }
-    }
-
-    cout << "Cliente com CPF " << CPF << " não encontrado." << endl;
 }
 
 int main(){
