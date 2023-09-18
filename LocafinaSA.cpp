@@ -41,6 +41,23 @@ void IncluirCliente(vector<Cliente>& clientes){
 
 }
 
+void ExcluirCliente(vector<Cliente>& clientes) {
+    
+    string CPF;
+    cout << "Informe o CPF do cliente a ser excluído: ";
+    cin >> CPF;
+
+    for (auto it = clientes.begin(); it != clientes.end(); ++it) {
+        if (it->CPF == CPF) {
+            it = clientes.erase(it);
+            cout << "Cliente excluído com sucesso!" << endl;
+            return;
+        }
+    }
+
+    cout << "Cliente com CPF " << CPF << " não encontrado." << endl;
+}
+
 int main(){
     vector<Cliente> clientes;
     int opcao;
