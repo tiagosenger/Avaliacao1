@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 
 using namespace std;
@@ -21,7 +22,26 @@ struct Veiculo{
     string Loja_Retirada;
 };
 
+void incluircliente (vector<Cliente>&cliente){
+    Cliente Novocliente;
+    cout << "Por favor, informe o nome do cliente: " << endl;
+    cin.ignore();
+    getline (cin, Novocliente.Nome);
+    
+    cout << "Por favor, informe o CPF: " << endl;
+    cin >> Novocliente.CPF;
+    cout << "Por favor, informe a data de nascimento (DD/MM/AAA): " << endl;
+    cin >> Novocliente.DtNascimento;
+    cout << "Por favor, informe a CNH do cliente: " << endl;
+    cin >> Novocliente.CNH;
+    cout << "Cliente cadastrado!" << endl;;
+
+    cliente.push_back(Novocliente);
+
+}
+
 int menu(){
+    vector <Cliente> cliente;
     int opcao;
     cout << "Olá, seja bem vindo! Selecione uma das opçoes abaixo: " << endl;
     cout << "Opção 1: Incluir " << endl;
@@ -34,6 +54,8 @@ int menu(){
         switch (opcao){
         case 1:
         cout << "Opção escolhida: Incluir" << endl;
+        incluircliente(cliente);
+        
         break;
         case 2: 
         cout << "Opção escolhida: Excluir" << endl;
@@ -57,8 +79,12 @@ int menu(){
 }
 
 
+
+
 int main(){
+
     menu();
+
 
 
     return 0;
