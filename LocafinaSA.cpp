@@ -46,9 +46,9 @@ int menu(){
     cout << "Olá, seja bem vindo! Selecione uma das opçoes abaixo: " << endl;
     cout << "Opção 1: Incluir " << endl;
     cout << "Opção 2: Excluir " << endl;
-    cout << "Opção 3: Alterar(Apenas por placa) " << endl;
+    cout << "Opção 3: Alterar(Apenas por CPF) " << endl;
     cout << "Opção 4: Listar " << endl;
-    cout << "Opção 5: Localizar(Por placa) " << endl;
+    cout << "Opção 5: Localizar(Por CPF) " << endl;
     cout << "Opção 0: Sair " << endl;
     cin >> opcao;
         switch (opcao){
