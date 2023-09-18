@@ -51,9 +51,17 @@ Cliente incluirCliente(vector<Cliente>& cliente) {
 
 }
 
+void listarCliente(vector<Cliente>& cliente) {
+     for( auto it = cliente.begin();
+        it != cliente.end();
+        it++){
+            cout << (*it).nome << " " << (*it).cpf << " " << (*it).cnh << " "  << (*it).DtNascimento << endl;;
+        }
+}
+
 
 int main () {
-    vector<Cliente> cliente;
+    vector<Cliente> cliente = {};
     int opcao;
     cout << "Escolha uma opcao (de 1 a 5), ou 0 (zero) para sair";
     while(opcao != 0) {
@@ -73,6 +81,7 @@ int main () {
         
         case 4:
             cout << "Listar clientes: " << endl;
+            listarCliente(cliente);
             break;
         
         case 5:
@@ -84,7 +93,6 @@ int main () {
             break;
         }
     }
-
 
     return 0;
 }
