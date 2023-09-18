@@ -1,0 +1,6 @@
+*.o
+*.tmp
+*.json
+/private
+/keys
+*output
