@@ -320,7 +320,7 @@ int menucliente(){
 int main(){
     int op;
     while (true){
-        cout << "Menu de modulos: " << endl;
+        cout << "Menu de modulos (Selecione uma das opções abaixo): " << endl;
         cout << "Opção 1: Clientes" << endl;
         cout << "Opção 2: Veiculos" << endl;
         cin >> op;
