@@ -21,6 +21,14 @@ struct Veiculo {
     string loja_retirada;
 };
 
+struct Locacao {
+    bool realizada;
+    string dataRetiradaConf;
+    string horaRetiradaConf;
+    string dataEntregaConf;
+    string horaEntregaConf;
+};
+
 void limpaTela() {
     system("cls");
 }
@@ -397,7 +405,8 @@ void renderizaMenu() {
 
     cout << "Menu de Opcoes: " << endl;
     cout << "1. Gestao de clientes" << endl;
-    cout << "2. Gestao de veiculo" << endl << endl;
+    cout << "2. Gestao de veiculo" << endl;
+    cout << "3. Gestao de locacao" << endl << endl;
 
     cout << "Qual menu voce deseja escolher? ";
     cin >> menu;
@@ -498,6 +507,14 @@ void renderizaMenu() {
             break;
          }
     }
+    } else if(menu == 3) {
+        int opcao;
+        cout << "Menu de Opcoes: " << endl;
+        cout << "1. Incluir locacao" << endl;
+        cout << "2. Excluir excluir locacao" << endl;
+        cout << "3. Alterar locacao" << endl;
+        cout << "4. Listar todas as locacoes" << endl;
+        cout << "0. Sair" << endl;
     }
 
 }
