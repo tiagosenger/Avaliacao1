@@ -1,6 +1,9 @@
 #include <iostream>
 //#include <windows.h>
 #include <vector>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -404,7 +407,10 @@ void alterarDadosVeiculo (vector<Veiculo>& veiculo) {
 }
 
 void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo){
-    string cnh, placa, cpf;
+
+    Locacao novaLocacao;
+
+    string cnh, placa, cpf, nome, dataRetirada;
     int op;
     cout << "Por favor, informe a CNH do cliente: " << endl;
     getline(cin, cnh);
@@ -424,6 +430,8 @@ void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
                 break;
             }
         }
+       
+        novaLocacao.veiculoConf.placa_veiculo = (*it).placa_veiculo;
     }
     cout << "Por favor, informe o CPF do cliente para verificação: " << endl;
     getline (cin, cpf);
@@ -441,13 +449,15 @@ void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
                 break;
             }
         }
+        novaLocacao.clienteConf.nome = (*it).nome;
+        novaLocacao.clienteConf.cpf = (*it).cpf;
+        novaLocacao.clienteConf.cnh = (*it).cnh;
     }
-    for( auto it = locacao.begin();
-        it != locacao.end();
-        it++){
-         (*it).clienteConf.nome = 
-    } // continuar daqui
-    
+
+    cout << "Digite a data real (nao prevista) da retirada: ";
+    cin >> dataRetirada;
+
+    locacao.push_back(novaLocacao);
 }
 
 
