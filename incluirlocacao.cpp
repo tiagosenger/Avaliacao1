@@ -36,12 +36,10 @@ struct Locacao {
 
 void menuinicial();
 
-
 void limpaTela() {
     system("cls");
 }
-
-
+//------------FUNÇÕES CLIENTES----------------//
 void incluirCliente(vector<Cliente>& cliente) {
     Cliente novoCliente;
     string cpf, nomeCliente, data_nascimento, cnh;
@@ -78,8 +76,7 @@ void incluirCliente(vector<Cliente>& cliente) {
     cin.ignore();
     limpaTela();
 
-} while (opcao != 'n');
-
+    } while (opcao != 'n');
 }
 
 void listarCliente(vector<Cliente>& cliente) {
@@ -203,7 +200,7 @@ void localizarCliente (vector<Cliente>& cliente) {
             };
         }
 }
-
+//------------FUNÇÕES VEÍCULOS----------------//
 void incluirVeiculo (vector<Veiculo>& veiculo) {
     Veiculo novoVeiculo;
     string novoRenavam, novaPlacaVeiculo, novaDataRetirada, horaRetirada, novaDataEntrega, horaEntrega, lojaRetirada;
@@ -252,7 +249,7 @@ void incluirVeiculo (vector<Veiculo>& veiculo) {
     cin.ignore();
     limpaTela();
 
-} while (opcao != 'n');
+    } while (opcao != 'n');
 }
 
 void listarVeiculo(vector<Veiculo>& veiculo) {
@@ -405,7 +402,7 @@ void alterarDadosVeiculo (vector<Veiculo>& veiculo) {
         }
         cout << "Veiculo alterado com sucesso!" << endl;
 }
-
+//------------FUNÇÕES LOCAÇAO----------------//
 void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo){
 
     Locacao novaLocacao;
@@ -459,8 +456,7 @@ void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
 
     locacao.push_back(novaLocacao);
 }
-
-
+//------------FUNÇÕES MENUS------------------//
 void menuCliente(vector<Cliente> &cliente) {
     int opcao;
         while(opcao != 0) {
@@ -507,10 +503,9 @@ void menuCliente(vector<Cliente> &cliente) {
             break;
         }
     }
-    }
+}
 
-
-    void menuVeiculo (vector<Veiculo> &veiculo) {
+void menuVeiculo (vector<Veiculo> &veiculo) {
         int opcao;
         while(opcao != 0) {
 
@@ -557,8 +552,9 @@ void menuCliente(vector<Cliente> &cliente) {
             break;
          }
     }
-    }
-    void menuLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo) {
+}
+
+void menuLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo) {
         int opcao;
         while(opcao != 0) {
         cout << "Menu de Opcoes: " << endl;
@@ -604,11 +600,7 @@ void menuCliente(vector<Cliente> &cliente) {
          }
     }
 }
-    
-
-
-
-
+//---------------FUNÇÃO MAIN------------------//
 int main () {
     int menu;
     vector<Cliente> cliente;
