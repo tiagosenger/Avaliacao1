@@ -25,7 +25,7 @@ struct Veiculo {
 };
 
 struct Locacao {
-    bool retiradaRealizada;
+    bool retiradaRealizada = false;
     Cliente clienteConf;
     Veiculo veiculoConf;
     string dataRetiradaConf;
@@ -175,7 +175,7 @@ void alterarDadosCliente (vector<Cliente>& cliente) {
                     }
             };
         }
-    cout << "Cliente alterado com sucesso!" << endl;
+    cout << "Dados do cliente alterados com sucesso!" << endl;
 
 }  
 
@@ -408,7 +408,7 @@ void incluirLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
 
     Locacao novaLocacao;
 
-    string cnh, placa, cpf, nome, dataRetirada;
+    string cnh, placa, cpf, nome, dataRetirada,horaRetirada, dataEntrega, horaEntrega;
     int op;   
     char respostaRetirada;
 
@@ -427,10 +427,9 @@ void incluirLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
             cout << "Digite novamente a Placa: " << endl;
             getline(cin, placa);
             } else if ( op == 2){
-                break;
+                return;
             }
         }
-       
         novaLocacao.veiculoConf.placa_veiculo = (*it).placa_veiculo;
     }
     cout << "Por favor, informe o CPF do cliente para verificação: " << endl;
@@ -456,28 +455,37 @@ void incluirLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
 
     cout << "Digite a data real (nao prevista) da retirada: ";
     cin >> dataRetirada;
+    cout << "Digite a hora de retirada: ";
+    cin >> horaRetirada;
+    cout << "Digite a data de entrega: ";
+    cin >> dataEntrega;
+    cout << "Digite a hora de entrega: ";
+    cin >> horaEntrega;
+    
+    bool veiculoLocado = novaLocacao.retiradaRealizada;
 
-    cout << "A retirada já aconteceu?(S/N): ";
-    cin >> respostaRetirada;
-    cin.ignore();
-
-    if (respostaRetirada == 'S' || respostaRetirada == 's') {
-        novaLocacao.retiradaRealizada = true;
+    if(veiculoLocado) {
+        cout << "Desculpe, este veiculo ja esta locado! " << endl;
     } else {
-        novaLocacao.retiradaRealizada = false;
+        cout << "Locacao cadastrada com sucesso! " << endl;
+        novaLocacao.retiradaRealizada = true;
+        novaLocacao.dataRetiradaConf = dataRetirada;
+        novaLocacao.horaEntregaConf = horaRetirada;
+        novaLocacao.dataEntregaConf = dataEntrega;
+        novaLocacao.horaEntregaConf = horaEntrega;
+        locacao.push_back(novaLocacao);
     }
 
-    locacao.push_back(novaLocacao);
 }
 
 void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> &veiculo) {
     if (locacao.size() == 0) {
-        cout << "Nenhuma locação foi registrada ainda!" << endl;
+        cout << "Nenhuma locacao foi registrada ainda!" << endl;
         return;
     }
 
     string placa;
-    cout << "Digite a placa do veículo para listar suas locações: ";
+    cout << "Digite a placa do veiculo para listar suas locacoes: ";
     cin >> placa;
 
     Veiculo veiculoSelecionado;
@@ -490,10 +498,10 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
         }
     } 
     if (!veiculoEncontrado) {
-        cout << "Veículo com placa " << placa << " não encontrado!" << endl;
+        cout << "Veiculo com placa " << placa << " nao encontrado!" << endl;
         return;
     }
-    cout << "Locações do veículo com placa " << placa << ":" << endl;
+    cout << "Locacoes do veiculo com placa " << placa << ":" << endl;
     for (auto& loc : locacao) {
         if (loc.veiculoConf.placa_veiculo == placa) {
             cout << "Cliente: " << loc.clienteConf.nome << endl;
@@ -504,13 +512,13 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
         }
     }
     string cpfCliente;
-    cout << "Digite o CPF do cliente cuja locação será excluída: ";
+    cout << "Digite o CPF do cliente cuja locacao sera excluida: ";
     cin >> cpfCliente;
     
     for (auto it = locacao.begin(); it != locacao.end();) {
         if (it->veiculoConf.placa_veiculo == placa && it->clienteConf.cpf == cpfCliente) {
             it = locacao.erase(it);
-            cout << "Locação excluída com sucesso!" << endl;
+            cout << "Locacao excluida com sucesso!" << endl;
         } else {
             ++it;
         }
@@ -519,34 +527,49 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
 
 void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>) {
     if (locacao.size() == 0) {
-        cout << "Nenhuma locação foi registrada ainda!" << endl;
+        cout << "Nenhuma locacao foi registrada ainda!" << endl;
         return;
     }
 
-    string placa;
-    cout << "Digite a placa do veículo da locação que deseja alterar: ";
+    string placa, cpf;
+    int opcao;
+    cout << "Digite a placa do veiculo da locacao que deseja alterar: ";
     getline(cin, placa);
 
     bool encontrada = false;
     for (auto& loc : locacao) {
+        while(placa != loc.veiculoConf.placa_veiculo) {
+            cout << "A placa do veiculo nao corresponde ao cliente da locacao!" << endl;  
+            cout << "Por favor, digite 1 para reinserir uma placa valida ou digite qualquer outra tecla para voltar ao menu: " << endl;
+            cin >> opcao;
+            cin.ignore();
+            if(opcao == 1){
+                cout << "Reinsira uma nova placa: ";
+                getline(cin, placa);
+            } else{
+                cout << "Placa do veiculo nao encontrada. Retornando para o menu de locacao." << endl <<endl;
+                return;
+            }
+        }
         encontrada = true;
-        cout << "Locação encontrada: " << endl;
+        cout << "Locacao encontrada: " << endl;
         cout << "CPF do cliente: " << loc.clienteConf.cpf << endl;
         cout << "Data/Hora programada da entrega: " << loc.dataEntregaConf << " " << loc.horaEntregaConf << endl;
 
-        string cpf;
-        bool cpfValido = false; 
-        while (!cpfValido) {
-            cout << "Digite o CPF do cliente (ou digite '0' para voltar ao menu): ";
-            getline(cin, cpf);
+        cout << "Digite o CPF para alterar os dados: ";
+        getline(cin, cpf);
 
-            if (cpf == "0") {
-            return;
-            }
-            if (cpf == loc.clienteConf.cpf) {
-            cpfValido = true;
-            } else {
-            cout << "O CPF não corresponde ao cliente da locação." << endl;
+        while (cpf != loc.clienteConf.cpf) {
+             cout << "O CPF nao corresponde ao cliente da locaçao." <<endl;
+             cout<< "Digite 1 para reinserir um cpf valido ou digite qualquer outra tecla para voltar ao menu: " << endl;
+             cin >> opcao;
+             cin.ignore();
+             if(opcao == 1) {
+              cout << "Reinsira um novo CPF: ";
+              getline(cin, cpf);
+             } else {
+                cout << "CPF nao encontrado. Retornando para o menu de locacao." << endl <<endl;
+                return;
              }
         }
 
@@ -560,13 +583,7 @@ void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>)
         loc.horaEntregaConf = novaHoraEntrega;
 
         cout << "Data/Hora Real de Entrega (Após a alteração): " << loc.dataEntregaConf << " " << loc.horaEntregaConf << endl;
-        cout << "Locação atualizada com sucesso!" << endl;
-        break;        
-    }
-
-    if (!encontrada) {
-        cout << "Locação com placa " << placa << " não encontrada, voltando para o menu" << endl;
-    return;
+        cout << "Locação atualizada com sucesso!" << endl;       
     }
 }
 
@@ -606,7 +623,7 @@ void menuCliente(vector<Cliente> &cliente) {
         cin >> opcao;  
         cin.ignore();
 
-        switch (opcao){
+    switch (opcao){
         case 1:
             limpaTela();
             cout << "Incluir um cliente: " << endl;
@@ -632,8 +649,12 @@ void menuCliente(vector<Cliente> &cliente) {
             cout << "Localizar um cliente (Por CPF): " << endl;
             localizarCliente(cliente);
             break;  
-        default:
-            cout << "Programa finalizado";
+        case 0:
+            cout << "Retornando para o menu..." << endl << endl;
+            break;
+
+        default: 
+            cout << "Opcao invalida!" <<endl;
             break;
         }
     }
@@ -681,8 +702,11 @@ void menuVeiculo (vector<Veiculo> &veiculo) {
             cout << "Localizar um veiculo (Por Placa): " << endl;
             localizarVeiculo(veiculo);
             break;  
+        case 0:
+            cout << "Retornando para o menu..." <<endl<<endl;
+            break;
         default:
-            cout << "Programa finalizado";
+            cout << "Opcao invalida!" <<endl;
             break;
          }
     }
@@ -723,8 +747,11 @@ void menuLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Vei
             cout << "Listar todas as locações registradas: " << endl;
             listarLocacao(locacao, cliente, veiculo);
             break;
+        case 0:
+            cout << "Retornando para o menu...";
+            break;
         default:
-            cout << "Programa finalizado";
+            cout << "Opcao invalida" <<endl;
             break;
          }
     }
@@ -740,7 +767,8 @@ int main () {
     cout << "Menu de Opcoes: " << endl;
     cout << "1. Gestao de clientes" << endl;
     cout << "2. Gestao de veiculo" << endl;
-    cout << "3. Gestao de locacao" << endl << endl;
+    cout << "3. Gestao de locacao" << endl; 
+    cout << "0. Sair do sistema:" << endl << endl;
 
     cout << "Qual menu voce deseja escolher? ";
     cin >> menu;
@@ -748,17 +776,20 @@ int main () {
     
     switch(menu){
         case 1:
-        menuCliente(cliente);
-        break;
+            menuCliente(cliente);
+            break;
         case 2:
-        menuVeiculo(veiculo);
-        break;
+            menuVeiculo(veiculo);
+            break;
         case 3:
-        menuLocacao(locacao, cliente, veiculo);
-        break;
-        default: 
-        cout << "Programa finalizado" << endl;
-        break;
+            menuLocacao(locacao, cliente, veiculo);
+            break;
+        case 0: 
+            cout << "Programa finalizado" << endl;
+            break;
+        default:
+            cout << "Opcao invalida!" <<endl;
+            break;
     } 
    } while(menu != 0);
    
