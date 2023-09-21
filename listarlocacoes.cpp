@@ -569,6 +569,7 @@ void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>)
     return;
     }
 }
+
 void listarLocacao (const vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>) {
     if (locacao.size() == 0) {
         cout << "Nenhuma locação foi registrada ainda!" << endl;
