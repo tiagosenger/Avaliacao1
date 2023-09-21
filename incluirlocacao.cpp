@@ -60,6 +60,7 @@ void incluirCliente(vector<Cliente>& cliente) {
             getline(cin, cpf);
             }
         }
+        
     novoCliente.cpf = cpf;
 
     cout << "Digite a data de seu nascimento no formato dd/mm/yyyy: ";
