@@ -516,7 +516,7 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
         }
     }
 }
-
+.
 //------------FUNÇÕES MENUS------------------//
 void menuCliente(vector<Cliente> &cliente) {
     int opcao;
