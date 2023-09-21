@@ -678,10 +678,70 @@ void alterarOcorrencia(vector<Locacao> &locacao){
 }
 void listarOcorrenciaPorCliente(vector<Locacao> &locacao){
 
+    string cpf;
+    int opcao;
+
+    cout << "Digite seu CPF:" << endl;
+    getline (cin, cpf);
+
+        for( auto it = locacao.begin();
+            it != locacao.end();
+            it++){
+
+            if(cpf == (*it).clienteConf.cpf){
+
+                cout << "Data de ocorrencia: " << (*it).ocorrencia.dataOcorrencia <<endl;   
+                cout << "Hora da ocorrencia: " << (*it).ocorrencia.horaOcorrencia <<endl; 
+                cout << "Descricao: " << (*it).ocorrencia.descricao <<endl;   
+                cout << "Numero do apolice: " << (*it).ocorrencia.numeroApolice <<endl;  
+
+            }else if (cpf != (*it).clienteConf.cpf){
+
+                cout << "CPF Inválido! Para inserir novamente o CPF digite 1. Ou Para Sair digite O. " << endl;
+                
+                if (opcao == 1){
+                cout << "Digite Novamente o CPF:" << endl;
+                getline(cin, cpf);
+            }else if (opcao == 0){
+                return;
+            }
+        }
+    }
 }
+
+
+
+
 void listarOcorrenciaPorVeiculo (vector<Locacao> &locacao) {
 
+    string placa;
+    int opcao;
+
+    cout << "Digite o número da placa:" << endl;
+    getline (cin, placa);
+
+     for( auto it = locacao.begin();
+        it != locacao.end();
+        it++){
+        while(placa != (*it).veiculoConf.placa_veiculo) {
+            cout << "Placa Inválida! Para inserir novamente a Placa digite 1. Ou Para Sair digite O. " << endl;
+            if (opcao == 1){
+            cout << "Digite Novamente a Placa:" << endl;
+            getline(cin, placa);
+            }else if (opcao == 0) {
+            cout << "Retornando para o menu..." << endl;
+            return;
+            }
+        }
+        if(placa == (*it).veiculoConf.placa_veiculo){
+            cout << "Data de ocorrencia: " << (*it).ocorrencia.dataOcorrencia <<endl;   
+            cout << "Hora da ocorrencia: " << (*it).ocorrencia.horaOcorrencia <<endl; 
+            cout << "Descricao: " << (*it).ocorrencia.descricao <<endl;   
+            cout << "Numero do apolice: " << (*it).ocorrencia.numeroApolice <<endl;  
+        }
+    }
 }
+
 
 
 //------------FUNÇÕES MENUS------------------//
@@ -841,7 +901,8 @@ void menuOcorrencia (vector<Locacao> &locacao) {
         cout << "1. Incluir ocorrencia" << endl;
         cout << "2. Excluir ocorrencia" << endl;
         cout << "3. Alterar ocorrencia" << endl;
-        cout << "4. Listar todas as ocorrencias" << endl;
+        cout << "4. Listar todas as ocorrencias por cliente" << endl;
+        cout << "5. Listar todas as ocorrencias por veiculo" << endl ;
         cout << "0. Sair" << endl;
 
         cout << "Escolha uma opcao (de 1 a 5), ou 0 (zero) para sair: ";
@@ -851,28 +912,28 @@ void menuOcorrencia (vector<Locacao> &locacao) {
         switch (opcao){
         case 1:
             limpaTela();
-            cout << "Incluir uma locação: " << endl;
+            cout << "Incluir uma ocorrencia: " << endl;
             incluirOcorrencia(locacao);
             break;
         case 2:
             limpaTela();
-            cout << "Excluir locação: " << endl;
+            cout << "Excluir uma ocorrencia: " << endl;
             excluirOcorrencia(locacao);
             break;
         case 3:
             limpaTela();
-            cout << "Alterar data e/ou hora de uma locação: " << endl;
+            cout << "Alterar uma ocorrencia: " << endl;
             alterarOcorrencia(locacao);
             break;
         case 4:
             limpaTela();
-            cout << "Listar todas as locações registradas: " << endl;
+            cout << "Listar todas as ocorrencias por clientes registradas: " << endl;
             listarOcorrenciaPorCliente(locacao);
             break;
 
         case 5:
             limpaTela();
-            cout << "Listar todas as locações registradas: " << endl;
+            cout << "Listar todas as ocorrencias  por veiculos registradas: " << endl;
             listarOcorrenciaPorVeiculo(locacao);
             break;
         case 0:
