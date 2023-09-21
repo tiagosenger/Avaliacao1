@@ -60,7 +60,6 @@ void incluirCliente(vector<Cliente>& cliente) {
             getline(cin, cpf);
             }
         }
-        
     novoCliente.cpf = cpf;
 
     cout << "Digite a data de seu nascimento no formato dd/mm/yyyy: ";
@@ -517,7 +516,58 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
         }
     }
 }
-.
+void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>) {
+    if (locacao.size() == 0) {
+        cout << "Nenhuma locação foi registrada ainda!" << endl;
+        return;
+    }
+
+    string placa;
+    cout << "Digite a placa do veículo da locação que deseja alterar: ";
+    getline(cin, placa);
+
+    bool encontrada = false;
+    for (auto& loc : locacao) {
+        encontrada = true;
+        cout << "Locação encontrada: " << endl;
+        cout << "CPF do cliente: " << loc.clienteConf.cpf << endl;
+        cout << "Data/Hora programada da entrega: " << loc.dataEntregaConf << " " << loc.horaEntregaConf << endl;
+
+        string cpf;
+        bool cpfValido = false; 
+        while (!cpfValido) {
+            cout << "Digite o CPF do cliente (ou digite '0' para voltar ao menu): ";
+            getline(cin, cpf);
+
+            if (cpf == "0") {
+            return;
+            }
+            if (cpf == loc.clienteConf.cpf) {
+            cpfValido = true;
+            } else {
+            cout << "O CPF não corresponde ao cliente da locação." << endl;
+             }
+        }
+
+        string novaDataEntrega, novaHoraEntrega;
+        cout << "Digite a nova data (dd/mm/yyyy): ";
+        getline(cin, novaDataEntrega);
+        cout << "Digite a nova hora (hh:mm): ";
+        getline(cin, novaHoraEntrega);
+        
+        loc.dataEntregaConf = novaDataEntrega;
+        loc.horaEntregaConf = novaHoraEntrega;
+
+        cout << "Data/Hora Real de Entrega (Após a alteração): " << loc.dataEntregaConf << " " << loc.horaEntregaConf << endl;
+        cout << "Locação atualizada com sucesso!" << endl;
+        break;        
+    }
+
+    if (!encontrada) {
+        cout << "Locação com placa " << placa << " não encontrada, voltando para o menu" << endl;
+    return;
+    }
+
 //------------FUNÇÕES MENUS------------------//
 void menuCliente(vector<Cliente> &cliente) {
     int opcao;

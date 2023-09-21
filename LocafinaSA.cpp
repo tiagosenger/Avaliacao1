@@ -60,6 +60,7 @@ void incluirCliente(vector<Cliente>& cliente) {
     getline(cin, data_nascimento);
     novoCliente.DtNascimento = data_nascimento;
 
+
     cout << "Digite a sua CNH: ";
     getline(cin, cnh);
     novoCliente.cnh = cnh;
