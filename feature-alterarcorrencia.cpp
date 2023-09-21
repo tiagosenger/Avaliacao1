@@ -711,8 +711,70 @@ void excluirOcorrencia(vector<Locacao> &locacao) {
 }
 
 void alterarOcorrencia(vector<Locacao> &locacao){
+    if(locacao.size() == 0) {
+        cout << "Voce deve adicionar uma ocorrência primeiro! " << endl;
+        return;
+    }
+    string novaDescricao, novaDataOcorrencia, novaHoraOcorrencia, novoNumeroApolice;
+    string novocpf, novaplaca;
+    int opcao;
+    cout << "Digite o CPF para encontrar a locação desejada: " << endl;
+    cin >> novocpf;
+    cout << "Agora digite a placa para encontrar a locação desejada: " << endl;
+    cin >> novaplaca;
+     for( auto it = locacao.begin();
+        it != locacao.end();
+        it++){
+            if(novocpf == (*it).clienteConf.cpf && novaplaca == (*it).veiculoConf.placa_veiculo) {
+                cout << "Ocorrência localizada!" << endl 
+                     << "Data da ocorrência: " << (*it).ocorrencia.dataOcorrencia << endl
+                     << "Hora da ocorrência: " << (*it).ocorrencia.horaOcorrencia << endl
+                     << "Descrição: " << (*it).ocorrencia.descricao << endl
+                     << "Numero da Apolice: " << (*it).ocorrencia.numeroApolice << endl;
 
+                    cout << "Menu de Opçoes: " << endl;
+                    cout << "1. Alterar Data da ocorrência" << endl;
+                    cout << "2. Alterar Hora da ocorrência" << endl;
+                    cout << "3. Alterar Descrição da ocorrência" << endl;
+                    cout << "4. Alterar numero da Apolice" << endl << endl;
+                    
+                    cout << "Qual dado do cliente voce deseja alterar? ";
+                    cin >> opcao;
+                    cin.ignore();
+                    
+                    switch (opcao){
+                    case 1:
+                        limpaTela();
+                        cout << "Digite a nova data da ocorrência: " << endl;
+                        getline(cin, novaDataOcorrencia);                     
+                        (*it).ocorrencia.dataOcorrencia = novaDataOcorrencia;
+                        break;
+                    case 2:
+                        limpaTela();
+                        cout << "Digite a nova hora da ocorrência: " << endl;
+                        getline(cin, novaHoraOcorrencia);                     
+                        (*it).ocorrencia.horaOcorrencia = novaHoraOcorrencia;
+                        break;
+                    case 3:
+                        limpaTela();
+                        cout << "Digite a nova descrição: " << endl;
+                        getline(cin, novaDescricao);                     
+                        (*it).ocorrencia.descricao = novaDescricao;
+                        break;
+                    case 4:
+                        limpaTela();
+                        cout << "Digite um novo número de Apólice: " << endl;
+                        getline(cin, novoNumeroApolice);                     
+                        (*it).ocorrencia.numeroApolice = novoNumeroApolice;
+                        break; 
+                    default:
+                        cout << "Opcao invalida";
+                        break;
+                    }
+            };
+        }
 }
+
 void listarOcorrenciaPorCliente(vector<Locacao> &locacao){
 
 }
