@@ -25,7 +25,7 @@ struct Veiculo {
 };
 
 struct Locacao {
-    bool realizada;
+    bool retiradaRealizada;
     Cliente clienteConf;
     Veiculo veiculoConf;
     string dataRetiradaConf;
@@ -301,6 +301,7 @@ void excluirVeiculo (vector<Veiculo>& veiculo) {
         cout << "Voce deve adicionar um veiculo primeiro! " << endl;
         return;
     }
+    
     string placa;
     cout << "Digite a placa do veiculo que deseja excluir: ";
     cin >> placa;
@@ -404,12 +405,14 @@ void alterarDadosVeiculo (vector<Veiculo>& veiculo) {
         cout << "Veiculo alterado com sucesso!" << endl;
 }
 //------------FUNÇÕES LOCAÇAO----------------//
-void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo){
+void incluirLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Veiculo> &veiculo){
 
     Locacao novaLocacao;
 
     string cnh, placa, cpf, nome, dataRetirada;
-    int op;
+    int op;   
+    char respostaRetirada;
+
     cout << "Por favor, informe a CNH do cliente: " << endl;
     getline(cin, cnh);
     cout << "Por favor, informe a Placa do Veiculo: " << endl;
@@ -455,8 +458,66 @@ void incluirlocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<
     cout << "Digite a data real (nao prevista) da retirada: ";
     cin >> dataRetirada;
 
+    cout << "A retirada já aconteceu?(S/N): ";
+    cin >> respostaRetirada;
+    cin.ignore();
+
+    if (respostaRetirada == 'S' || respostaRetirada == 's') {
+        novaLocacao.retiradaRealizada = true;
+    } else {
+        novaLocacao.retiradaRealizada = false;
+    }
+
     locacao.push_back(novaLocacao);
 }
+
+void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> &veiculo) {
+    if (locacao.size() == 0) {
+        cout << "Nenhuma locação foi registrada ainda!" << endl;
+        return;
+    }
+
+    string placa;
+    cout << "Digite a placa do veículo para listar suas locações: ";
+    cin >> placa;
+
+    Veiculo veiculoSelecionado;
+    bool veiculoEncontrado = false;
+    for (auto& v : veiculo) {
+        if (v.placa_veiculo == placa) {
+            veiculoSelecionado = v;
+            veiculoEncontrado = true;
+            break;
+        }
+    } 
+    if (!veiculoEncontrado) {
+        cout << "Veículo com placa " << placa << " não encontrado!" << endl;
+        return;
+    }
+    cout << "Locações do veículo com placa " << placa << ":" << endl;
+    for (auto& loc : locacao) {
+        if (loc.veiculoConf.placa_veiculo == placa) {
+            cout << "Cliente: " << loc.clienteConf.nome << endl;
+            cout << "Data de Retirada: " << loc.veiculoConf.dataRetirada << " " << loc.veiculoConf.horaRetirada << endl;
+            cout << "Data de Entrega: " << loc.veiculoConf.DataEntrega << " " << loc.veiculoConf.horaEntrega << endl;
+            cout << "Realizada: " << (loc.retiradaRealizada ? "Sim" : "Não") << endl;
+            cout << endl;
+        }
+    }
+    string cpfCliente;
+    cout << "Digite o CPF do cliente cuja locação será excluída: ";
+    cin >> cpfCliente;
+    
+    for (auto it = locacao.begin(); it != locacao.end();) {
+        if (it->veiculoConf.placa_veiculo == placa && it->clienteConf.cpf == cpfCliente) {
+            it = locacao.erase(it);
+            cout << "Locação excluída com sucesso!" << endl;
+        } else {
+            ++it;
+        }
+    }
+}
+.
 //------------FUNÇÕES MENUS------------------//
 void menuCliente(vector<Cliente> &cliente) {
     int opcao;
@@ -560,7 +621,7 @@ void menuLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Vei
         while(opcao != 0) {
         cout << "Menu de Opcoes: " << endl;
         cout << "1. Incluir locacao" << endl;
-        cout << "2. Excluir excluir locacao" << endl;
+        cout << "2. Excluir locacao" << endl;
         cout << "3. Alterar locacao" << endl;
         cout << "4. Listar todas as locacoes" << endl;
         cout << "0. Sair" << endl;
@@ -573,28 +634,23 @@ void menuLocacao (vector<Locacao> &locacao, vector<Cliente> &cliente, vector<Vei
         case 1:
             limpaTela();
             cout << "Incluir uma locação: " << endl;
-            incluirlocacao(locacao, cliente, veiculo);
+            incluirLocacao(locacao, cliente, veiculo);
             break;
         case 2:
             limpaTela();
-            cout << "Excluir um veiculo: " << endl;
-            excluirVeiculo(veiculo);
+            cout << "Excluir locação: " << endl;
+            excluirLocacao(locacao, cliente, veiculo);
             break;
         case 3:
             limpaTela();
-            cout << "Alterar dados de um veiculo (por RENAVAM): " << endl;
-            alterarDadosVeiculo(veiculo);
+            cout << "Alterar data e/ou hora de uma locação: " << endl;
+            alterarLocacao(locacao, cliente, veiculo);
             break;
         case 4:
             limpaTela();
-            cout << "Listar veiculos: " << endl;
-            listarVeiculo(veiculo);
+            cout << "Listar todas as locações registradas: " << endl;
+            listarLocacao(locacao, cliente, veiculo);
             break;
-        case 5:
-            limpaTela();
-            cout << "Localizar um veiculo (Por Placa): " << endl;
-            localizarVeiculo(veiculo);
-            break;  
         default:
             cout << "Programa finalizado";
             break;
@@ -617,7 +673,7 @@ int main () {
     cout << "Qual menu voce deseja escolher? ";
     cin >> menu;
     cin.ignore();
-    //limpaTela();
+    
     switch(menu){
         case 1:
         menuCliente(cliente);
