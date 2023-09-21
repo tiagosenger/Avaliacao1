@@ -34,6 +34,7 @@ struct Locacao {
     string horaEntregaConf;
 };
 
+
 void menuinicial();
 
 void limpaTela() {
