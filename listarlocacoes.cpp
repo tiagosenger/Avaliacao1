@@ -516,6 +516,7 @@ void excluirLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo> 
         }
     }
 }
+
 void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>) {
     if (locacao.size() == 0) {
         cout << "Nenhuma locação foi registrada ainda!" << endl;
@@ -567,7 +568,27 @@ void alterarLocacao (vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>)
         cout << "Locação com placa " << placa << " não encontrada, voltando para o menu" << endl;
     return;
     }
+}
+void listarLocacao (const vector<Locacao> &locacao, vector<Cliente>, vector<Veiculo>) {
+    if (locacao.size() == 0) {
+        cout << "Nenhuma locação foi registrada ainda!" << endl;
+        return;
+    }
 
+    cout << "Lista de Locações Registradas:" << endl;
+    for (const Locacao& loc : locacao) {
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Placa do Veículo: " << loc.veiculoConf.placa_veiculo << endl;
+        cout << "Cliente: " << loc.clienteConf.nome << endl;
+        cout << "CPF do Cliente: " << loc.clienteConf.cpf << endl;
+        cout << "Data de Retirada: " << loc.dataRetiradaConf << endl;
+        cout << "Hora de Retirada: " << loc.horaRetiradaConf << endl;
+        cout << "Data de Entrega: " << loc.dataEntregaConf << endl;
+        cout << "Hora de Entrega: " << loc.horaEntregaConf << endl;
+        cout << "Locação Realizada: " << (loc.retiradaRealizada ? "Sim" : "Não") << endl;
+        cout << "-----------------------------------------------------" << endl;
+    }
+}
 //------------FUNÇÕES MENUS------------------//
 void menuCliente(vector<Cliente> &cliente) {
     int opcao;
