@@ -42,13 +42,12 @@ struct Locacao {
     string horaEntregaConf;
 };
 
-
-
 void menuinicial();
 
 void limpaTela() {
     system("cls");
 }
+
 //------------FUNÇÕES CLIENTES----------------//
 void incluirCliente(vector<Cliente>& cliente) {
     Cliente novoCliente;
@@ -617,7 +616,7 @@ void listarLocacao (const vector<Locacao> &locacao, vector<Cliente>, vector<Veic
         cout << "-----------------------------------------------------" << endl;
     }
 }
-
+//------------FUNÇÕES OCORRENCIAS----------------//
 void incluirOcorrencia (vector<Locacao> &locacao) {
   
     Ocorrencia novaOcorrencia;
@@ -670,9 +669,47 @@ void incluirOcorrencia (vector<Locacao> &locacao) {
         }
     
 }
-void excluirOcorrencia(vector<Locacao> &locacao) {
 
+void excluirOcorrencia(vector<Locacao> &locacao) {
+    string cpf, placa;
+    char op;
+    
+    cout << "Digite o CPF do cliente da locação: ";
+    cin >> cpf;
+
+    cout << "Digite a placa do veículo locado: ";
+    cin >> placa;
+
+    for (auto& loc : locacao){
+        if (loc.retiradaRealizada && loc.clienteConf.cpf == cpf && loc.veiculoConf.placa_veiculo == placa){
+            if (loc.ocorrencia.dataOcorrencia.empty()){
+                cout << "Não há ocorrencias registradas para esta locação.";
+                return;
+            }
+        }
+
+        cout << "Ocorrências registradas para esta locação: " << endl;
+        cout << loc.ocorrencia.dataOcorrencia << endl << loc.ocorrencia.horaOcorrencia << endl << loc.ocorrencia.numeroApolice << endl << loc.ocorrencia.descricao << endl;
+
+        cout << "Deseja excluir essa ocorrencia?(S/N) " << endl;
+        cin >> op;
+
+        if (op == 'S' || op == 's'){
+            loc.ocorrencia.dataOcorrencia="";
+            loc.ocorrencia.horaOcorrencia="";
+            loc.ocorrencia.numeroApolice="";
+            loc.ocorrencia.descricao="";
+            cout << "Ocorrência excluída com sucesso! " << endl;
+        }
+        else{
+            cout << "Operação cancelada." << endl;
+        }
+        return;
+    }
+
+    cout << "Locação não encontrada para o CPF e placa fornecida." << endl;
 }
+
 void alterarOcorrencia(vector<Locacao> &locacao){
 
 }
